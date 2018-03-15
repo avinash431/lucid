@@ -1,0 +1,70 @@
+hdfs
+
+
+hdfs dfs -ls /
+
+hdfs dfs -mkdir /user/training/
+
+hdfs dfs -mkdir -p /user/training/hdfs/data
+
+hdfs dfs -ls /user/training/hdfs
+
+hdfs dfs -ls -R /user/training/hdfs
+
+hdfs dfs -put airport.dat /user/training/hdfs/data/
+
+hdfs dfs -ls /user/training/user/training/hdfs/data/
+
+hdfs dfs -cat /user/training/user/training/hdfs/data/airport.dat
+
+dd if=/dev/urandom of=sample.txt bs=64M count=16 
+
+hdfs dfs -copyFromLocal sample.txt /user/training/hdfs/data/
+
+hdfs dfs -ls /user/training/hdfs/data/
+
+hdfs dfs -count /user/training/hdfs/data
+
+hdfs dfs -put *.xls /user/training/hdfs/data
+
+hdfs dfs -ls /user/training/hdfs/data/
+
+hdfs dfs -Ddfs.replication=3 -put stocks.csv /user/training/hdfs/data
+
+hdfs dfs -Ddfs.block.size=67108864 -put names.txt /user/training/hdfs/data
+
+hdfs fsck /user/training/hdfs/data
+
+hdfs dfs -setrep -w 3 /user/training/hdfs/data/airport.dat
+
+hdfs dfs -mkdir /user/training/data/temp
+
+hdfs dfs -put *.data /user/training/data/temp/
+
+hdfs dfs -setrep -w 3 /user/training/data/temp/
+
+hdfs dfs -touchz /user/training/hdfs/data/zero_length.dat
+
+hdfs dfs -rm -r /user/training/data/temp
+
+hdfs dfs -rm /user/training/user/training/hdfs/data/airport.dat
+
+hdfs dfs -du /user/training/hdfs/data
+
+hdfs dfs -du -s -h /user/training/hdfs/data
+
+hdfs dfs -put names.txt /user/training/hdfs/data/
+
+hdfs dfs -checksum /user/training/hdfs/data/names.txt
+
+hdfs dfs -df -h /
+
+hadoop 
+
+hadoop version
+
+hadoop config
+
+hadoop fsck -blocks /user/training/hdfs/data/names.txt
+
+
