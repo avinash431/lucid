@@ -1,0 +1,23 @@
+1. Check directory status
+
+curl -i "http://localhost:50070/webhdfs/v1/tmp?user.name=cloudera&op=GETFILESTATUS"
+
+The above command is similar to hdfs dfs -ls
+
+2. Create a directory
+
+curl -i -X PUT "http://localhost:50070/webhdfs/v1/tmp/webhdfs?user.name=cloudera&op=MKDIRS"
+
+The above command is similar to hdfs dfs -mkdir /tmp/webhdfs
+
+3. Reading a file
+
+curl -i -L "http://localhost:50070/webhdfs/v1/tmp/webhdfs/webhdfs-test.txt?op=OPEN&user.name=cloudera"
+
+4.Rename a directory
+
+curl -i -X PUT "http://localhost:50070/webhdfs/v1/tmp/webhdfs?op=RENAME&user.name=cloudera&destination=/tmp/webhdfs-new"
+
+5.Delete a directory
+
+curl -i -X DELETE "http://localhost:50070/webhdfs/v1/tmp/webhdfs-new?op=DELETE&user.name=cloudera"
