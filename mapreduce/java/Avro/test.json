@@ -1,0 +1,3 @@
+{"name":"Joe","age":31,"emails":["joe@abc.com","joe@gmail.com"],"boss":null}
+{"name":"Jane","age":30,"emails":[],"boss":{"Employee":{"name":"Joe","age":31,"emails":["joe@abc.com","joe@gmail.com"],"boss":null}}}
+{"name":"Zoe","age":21,"emails":[],"boss":{"Employee":{"name":"Jane","age":30,"emails":[],"boss":{"Employee":{"name":"Joe","age":31,"emails":["joe@abc.com","joe@gmail.com"],"boss":null}}}}}
