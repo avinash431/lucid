@@ -1,0 +1,7 @@
+mkdir -p /mnt/hdfs
+
+open the file /etc/fstab and add the below line at the end of the file and save it
+vi /etc/fstab
+hadoop-fuse-dfs#dfs://quickstart.cloudera:8020 /mnt/hdfs fuse allow_other,usetrash,rw 2 0
+
+mount /mnt/hdfs
