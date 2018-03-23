@@ -1,0 +1,69 @@
+Amex Interview Questions :
+Map and Reduce functionality in Past Project
+Does it good to use one reducer
+Can we write query in sqoop
+can we import using different databases
+can we use union in sqoop query
+how to import table syntax
+how to import all table syntax
+Hive internal table and external table default location
+can we create a external table without location
+when we go for external table
+count in hive table
+how ofen u have used mapreduce
+how u have utilised mapreduce in u r previous project
+how job will be processed in yarn, once job was submitted
+Almost all transformations can be done in hive/pig, but still we go for mapreduce why?
+in which cases u have used mapreduce for transformations --- talk about counters along with transformation
+how good u r with pig
+how good u r with shell scripting
+how good u r in spark, rate out of 5
+how to use shell/unix commands in pig --- stream command
+what type of transformations u have done in ur previous project using pig
+default deleimeters in hive --- ctlr+A
+commands to copy file from HDFS to local, local to HDFS, HDFS to HDFS
+how to fasten the sqoop job  --- split by
+in hive, while creating tables which file format u have given and why?
+Do u have any knowledge on fast data technoligies like spark, kafka, strom ----- no further questions on this just YES/NO
+15-20 minutes discussion on previous projects experience.
+use of less command.
+external vs internal tables in hive ? 
+partitions in hive
+pig basics ..
+what are the things  u have worked upon in sqoop.
+mapper and reducers basics...
+hdfs  basics like what is block ,inputspilt ..very basics..
+basics of hadoop architecure .
+basics of mapreduce.
+Use of pipes in unix.?..
+Architecture of hadoop
+what are the components of Mapreduce
+what are the methods in mapper and reducer
+what is distributed cache, why it is needed
+how can you add multiple outputs in mapreduce
+how the output gets generated in map reduce
+what is hive
+what are external and internal tables
+what are partitions
+can we archive partitions
+what is pig
+how to filter column data in PIG
+what are different functions in pig
+what are different commands in hadoop
+what are different joins in sql
+when to use group by command
+query to get unique records in emp table when there are duplicates
+what is tail,cat commands in unix
+how to get unique logs in unix
+how to extract jar in unix
+how you used Unix in your program.. different commands used in your project
+What is experience and Relevant experience?
+Did you know anything about cornerstone project(ELF ingestion Framework)?
+Can you give commitment for this migration project for a year?
+Your are from which location?
+Overall and relevant experience in Hadoop
+Explain about Data Ingestion
+Can you give commitment for more than 10 months for this project
+Should be capable of working individually
+What is your base location
+Asked me that whether I am aware of their internal application before

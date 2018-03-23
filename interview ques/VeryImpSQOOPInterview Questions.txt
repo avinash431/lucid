@@ -1,0 +1,40 @@
+sqoop :
+------
+
+1.  default mappers in sqoop import ? can we change ? if yes how ?
+2.  what is the solution to import a table having no primary key?
+3.  can we add extra column while import the data ? if yes how ?
+4.  i have 3 columns in hive table but want to load 4 column data using sqoop into that table. Can v do ? if not Y ?
+5.  i dont have a unique key in mysql then how can i import data using sqoop ?
+6.  what exception u will get if u try to import the table without having a primary key?
+7.  can we load the data from sqoop into hive which mysql table column have a datetime datatype.
+8.  can we import data using both split by and mapper 1?
+9.  i have a table with 4 coulumns data of string type without order can we import data? if yes how ?
+10. why and when we will use --warehouse-dir and --target-dir?
+11. can we use --warehouse-dir with --query ? if yes what will be the folder name created in destination?
+12. is it manditory to use $Condition in where condition in query and why ?
+13. while using incremental append mode do we need to change the --target-dir loc ? if no how it will fit in already existing folder ?
+14. while using incremental lastmodified mode is it manditory to give new folder name in --target-dir ? if not what is the extra key we need to give ?
+15. while using incremental lastmodified mode is it manditory to give check-column type as data ? if not what is the extra key we need to give ?
+16. in sqoop export can we avoid getting null values from hdfs to any database? if yes how ?
+17. when and why we have to use sqoop merge ?
+18. can we compress our data while importing ? if yes how and what is the default zip format ?
+19. can we insert data into database using only sqoop ? if yes how ?
+20. why and when to use sqoop eval ?
+21. how to import data into hive table ? if yes is it manditory to have a table in hive ?
+22. how to import all tables ?
+23. how to exclude some tables from the list of import all tables ?
+24. can we import two diffferent tables from two different schemas ?
+25. can we write union in sqoop query ?
+26. can we specify our own delimitor while importing ? if yes how ?
+27. when we use sqoop query does only mapper will iniatiate or reducer also ?
+28. In which case reducer come in to picture while we are executing sqoop query ?
+29. can we import list of columns using sqoop --table without --query ? if yes how ?
+30. when and why we use direct mode in sqoop and will all the databases will support this mode ? 
+31. what are the file formats sqoop will support ?
+32. what is the default zip format while importing data into hdfs ?
+33. Do we have sqoop metastore and when it will be come into picture ? 
+
+
+
+

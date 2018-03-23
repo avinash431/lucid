@@ -1,0 +1,59 @@
+******************CoE Related Questions ******************
+
+ Name the most common Input Formats defined in Hadoop? Which one is default?
+ What is a Task Tracker in Hadoop? How many instances of TaskTracker run on a Hadoop Cluster?
+ How NameNode Handles data node failures?
+ Can I set the number of reducers to zero?
+ What is the meaning of speculative execution in Hadoop? Why is it important?
+ What is a NameNode? How many instances of NameNode run on a Hadoop Cluster?
+ If reducers do not start before all mappers finish then why does the progress on MapReduce job shows something like Map(50%) Reduce(10%)? Why reducers progress percentage is displayed when mapper is not finished yet?
+ How the Client communicates with HDFS?
+ Explain what is sqoop in Hadoop ?
+ What is Distributed Cache in mapreduce framework?
+ Number of mode supported by Hadoop? Differences between all?
+ What is a Combiner?
+ How will you write a custom partitioner for a Hadoop job?
+ What is the purpose of RecordReader in Hadoop?
+How to import and process data into Hadoop 
+What are the different joins in Hive 
+Previous project experience and issues faced particular with Hive 
+By using sqoop, if there is  no primary key values  how to read the data
+Asked about the projects I worked on, overall and relevant experience
+How sqoop gets connected to different databases?
+have you used any specific delimiter in sqoop?
+Default mappers run in sqoop
+How to import data if no primary key specified in the table?
+What is split-by in sqoop?
+I have 10 different dates and I use split by date(--split-by date) and I am specifying  no of mappers 4 (--m 4 ) so how these dates are distributed across these 4 mappers, inner logic
+Difference between  internal and external table
+Serdes in hive
+Syntax for json serde, how to insert data to a json table from normal table(managed/external) and how schema is mapped?
+Performance tuning in hive(explained him about orc format and snappy compression)
+What are topics, consumers in kafka?
+How consumer will know from which topic the data should be consumed?
+Once the data is consumed how to process the data?
+HDFS architecture?
+What is Job tracker and Task tracker and how to communicate?
+
+**************************** JPMC Specific Questions *****************************
+
+ Did you use any scheduling tool in your project? If yes, please explain
+ How you are tracking the defects in your prior engagements?
+ Any idea about the JIRA tool?
+ How many nodes clustered machine you worked on?
+ How much maximum volume of data you processed in big data?
+ I have 80 partitions in Hive table, how to archive older 60 partitions in Hive?
+ What is the major difference between file in OS and File in HDFS?
+ How to set properties in hive?
+ How to view all properties set in hive?
+What are your strength and opportunities?
+Limitations of Hive
+Limitations of Spark
+HDFS data move commands?
+how to perform left semi join in hive
+How to find how many Unix arguments passed to script
+Difference between Map reduce performance and Spark performance?
+ There are no syntax errors in your Hive query , but there is some error with it
+ How can you secure the user information or metadata information in Hive?
+Do you have work experience on Kerberos building?
+ How to load JSON record in a Hive table?

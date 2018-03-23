@@ -1,0 +1,18 @@
+Some question on Hive
+a.       Difference between partitioning and bucketing
+b.      When do you prefer bucketing over partitioning and vice-versa
+c.       Based on what criteria you decide the number of buckets. Which number do you think is effective and efficient. Justify yourself.
+d.      I have one table which is being loaded on hourly basis ie 24 files a day. The size of each file is 20KB. Which one you prefer out of bucketing & partitioning and justify?
+e.      Consider the same as above, file size is 128 MB and input file size is 20 KB. 6 months data exists in table with 24 files/day. The files are stored in Parquet format. When hive query submitted on this table it is assigning a mapper for each file ie around 4500 mappers for 6 months data. I want to reduce the number of mappers as well as improve the performance of the query. What is your way of designing the table as well as hive query.
+f.        The hive query is failing with out of memory errors. What could be the reason (just a guess) and do you propose any solution or alternative design to fix all the issues mentioned above.
+g.       My requirement is to pull the data from CS3 DI hive table and perform complex transformations and finally load the transformed data into SQLServer. What is your design.
+h.      File Formats: compare TEXT, SEQUENCE, AVRO, ORC & PARQUET file formats. Why do you think CS3 was designed to store data in Parquet format always. Do you see any advantages of Parquet files over other file formats.
+i.         The column COMMENTS in source data has KEY:VALUE (JSON) format. For eg: “First Name”:”Ben”; “LastName”:”Sailor”; “company”:”Amex” etc. I want to split this column into multiple columns using hive query. Your solution.
+j.        How do you implement incremental data loads with Hive. Your best design.
+k.       I have skewed data that means not equally distributed. Which one you suggest for skewed data. Bucketing or Partitioning. Why?
+l.         I have 2 tables. TAB1 has 500 GB data and TAB2 has 25MB data (lookup data).  Select a.1, b.2 from TAB1 a join TAB2 b on a.1=b.1 ; this query execution is taking time. Any suggestions to improve the performance of JOIN queries between these 2 tables.
+m.    What is UDF. Tell me one UDF you implemented in hive.
+n.      Special characters are coming in source data. Write a hive query to clean them up. Also I want to pick numbers alone from an alphanumeric value. How.
+o.      Prepare hive functions like REGEX_REPLACE, MAP_TO_STR, REFLECT, DATE functions etc.
+p.      How do you write DYNAMIC hive queries. Hint is to parameterize the hive query execution with hiveconf/hivevar and build the statements in wrapper script and pass them to hive variables.
+q.      Current Hive version what we have does not support UPDATEs/DELETEs. Is there any workaround in hive to implement updates and deletes.
