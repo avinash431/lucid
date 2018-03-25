@@ -2,7 +2,6 @@
 
 curl -i "http://localhost:50070/webhdfs/v1/tmp?user.name=cloudera&op=GETFILESTATUS"
 
-The above command is similar to hdfs dfs -ls
 
 2. Create a directory
 
