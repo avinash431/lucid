@@ -1,8 +1,5 @@
 package com.hadoop.fixedwidth;
 
-
-import java.net.URI;
-
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -19,40 +16,34 @@ public class FixedWidthDriver extends Configured implements Tool {
 	@Override
 	public int run(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		Job job =Job.getInstance(getConf());
-		job.setJobName("Distributed");
+
+		Job job = Job.getInstance(getConf());
+		job.setJobName("Fixed Width ");
 		job.setJarByClass(getClass());
-		
+
 		job.setMapperClass(FixedWidthMapper.class);
 		job.setNumReduceTasks(0);
-		
+
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(NullWritable.class);
-		
+
 		Path input = new Path(args[0]);
 		Path output = new Path(args[1]);
-		//Path cacheFile = new Path(args[2]);
-		//System.out.println(cacheFile.toUri());
-	    
-	
-		
-	    
-	    FileSystem fs = FileSystem.get(getConf());
-	    if(fs.exists(output)){
-	    	fs.delete(output, true);
-	    }
-	    FileInputFormat.addInputPath(job, input);
-	    FileOutputFormat.setOutputPath(job, output);
-	    URI[] uri =job.getCacheFiles();
-		System.out.println("Path isssssssssssssssss "+uri);
-		for(URI path: uri){
-			System.out.println(path);
+
+		FileSystem fs = FileSystem.get(getConf());
+
+		if (fs.exists(output)) {
+			fs.delete(output, true);
 		}
-		return job.waitForCompletion(true) ? 0:1;
+
+		FileInputFormat.addInputPath(job, input);
+		FileOutputFormat.setOutputPath(job, output);
+
+		return job.waitForCompletion(true) ? 0 : 1;
 	}
 
 	public static void main(String[] args) {
-		
+
 		try {
 			int exitCode = ToolRunner.run(new FixedWidthDriver(), args);
 			System.exit(exitCode);
@@ -62,5 +53,4 @@ public class FixedWidthDriver extends Configured implements Tool {
 		}
 
 	}
-
 }
