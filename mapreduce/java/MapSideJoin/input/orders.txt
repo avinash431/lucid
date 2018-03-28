@@ -1,0 +1,9 @@
+200,1000,Avinash,Card
+201,500,Prasanna,Cash
+202,1500,Akhila,Wallet
+203,900,Avinash,Cash
+204,800,Prasad,Wallet
+205,100,Akhila,Cash
+206,10000,Prasanna,Card
+207,700,Neelima,Cash
+208,9000,Shankar,card
