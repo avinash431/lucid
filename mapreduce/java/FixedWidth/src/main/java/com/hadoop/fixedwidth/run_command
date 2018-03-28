@@ -1,0 +1,1 @@
+yarn jar fixedwidth.jar -D fixedwidthlenght=49 -files metadata.txt <hdfs input path> <hdfs output path>
