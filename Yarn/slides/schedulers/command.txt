@@ -1,0 +1,16 @@
+sudo service hadoop-mapreduce-historyserver restart
+sudo service hadoop-yarn-resourcemanager restart
+sudo service hadoop-yarn-nodemanager restart
+
+capacity scheduler
+
+yarn jar wordcount.jar -D yarn.resourcemanager.scheduler.class=org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler -D mapreduce.job.queuename=prod /user/lucid/wordcount/input /user/lucid/wordcount/prod-output
+
+yarn jar wordcount.jar -D yarn.resourcemanager.scheduler.class=org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler -D mapreduce.job.queuename=dev /user/lucid/wordcount/input /user/lucid/wordcount/dev-output
+
+
+fair scheduler
+
+yarn jar wordcount.jar -D mapreduce.job.queuename=dev /user/lucid/wordcount/input /user/lucid/wordcount/dev-output
+
+yarn jar wordcount.jar -D mapreduce.job.queuename=prod /user/lucid/wordcount/input /user/lucid/wordcount/prod-output
