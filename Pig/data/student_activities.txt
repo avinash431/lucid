@@ -1,0 +1,5 @@
+s1234	John	Soccer	Baseball	Piano
+s1245	Emily	Violin	Fencing
+s5634	Nina	Lacrosse	Basketball
+s3454	Mike	Cello	Piano
+s6543	Nita	Basketball	Track	Sailing	Karate

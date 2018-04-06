@@ -1,0 +1,5 @@
+s1234	John	8	(Seattle, 2068541229)
+s1245	Emily	8	(Sammamish, 4253445435)
+s5634	Nina	8	(Kirkland, 2532316437)
+s3454	Mike	8	(Issaquah, 4254366721)
+s6543	Nita	8	(Redmond, 4253268720)

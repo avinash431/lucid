@@ -1,0 +1,4 @@
+s1234	John	8	[Math#95,Physics#44,Chemistry#66]
+s1245	Emily	8	[Math#33,Physics#23,Chemistry#62]
+s5634	Nina	8	[Math#56,Physics#87,Chemistry#54]
+s5231	Rick	8	[Math#78,Physics#82,Chemistry#72]

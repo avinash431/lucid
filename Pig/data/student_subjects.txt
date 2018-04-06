@@ -1,0 +1,4 @@
+s1234	John	8	Math	Chemistry	Physics
+s1245	Emily	8	Math	Physics
+s5634	Nina	8	Math	Chemistry
+s5231	Rick	8	Math	Physics	English

@@ -1,0 +1,12 @@
+{"order_id": "o1","username": "john","product": "samsung phone","quantity": 1,"amount": 379.99,"order_date": "3-4-2017","zipcode": "90210"}
+{"order_id": "o2","username": "jin","product": "notebook","quantity": 2,"amount": 8.99,"order_date": "5-4-2017","zipcode": "90002"}
+{"order_id": "o3","username": "nina","product": "panasonic speakers","quantity": 3,"amount": 100,"order_date": "12-4-2017","zipcode": "94304"}
+{"order_id": "o4","username": "emily","product": "LG TV","quantity": 1,"amount": 587.25,"order_date": "3-5-2017","zipcode": "07310"}
+{"order_id": "o5","username": "rick","product": "i phone","quantity": 1,"amount": 669,"order_date": "3-15-2017","zipcode": "07310"}
+{"order_id": "o5"}
+{"order_id": "o6","username": "ben","product": "samsung tv","quantity": 1,"amount":509.88,"order_date": "3-18-2017","zipcode": "07310"}
+{"order_id": "o7","username": "nita","product": "bose speakers","quantity": 1,"amount" :400.56,"order_date": "4-4-2017","zipcode": "94304"}
+{"order_id": "o8","username": "alexa","product": "nike shoes","quantity": 2,"amount": 9.98,"order_date": "3-11-2017","zipcode": "10011"}
+{"order_id": "o9","username": "doug","product": "adidas shoes","quantity": 3,"amount":89.99,"order_date": "3-13-2017" ,"zipcode": "98210"}
+{"order_id": "o10"}
+{"order_id": "o11"}
