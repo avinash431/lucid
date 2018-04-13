@@ -1,0 +1,11 @@
+create table students
+id int
+name string
+marks array(int)
+result map(total string distinction string)
+address struct(aptno:int,street string,city string,pincode int
+
+create table student_marks with the column id,total,distinction
+
+fetch max marks from the column marks (select)
+
