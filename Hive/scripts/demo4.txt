@@ -5,20 +5,20 @@ load data local inpath 'products.csv'
 overwrite into table products;
 
 select * from products
-union
+union all
 select * from freshproducts;
 (Schema from both sides should match)
 
 
 select * from products
-union
+union all
 select id, title, cost from freshproducts;
 
 insert into freshproducts 
 values ("iphone7", " iPhone 7", 950, 1234567890);
 
 select * from products 
-union 
+union all
 select id, title, cost from freshproducts;
 
 (No dupes)
