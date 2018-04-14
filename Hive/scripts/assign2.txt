@@ -21,12 +21,15 @@ CREATE TABLE partitioned_user(
  
   -- dynamic partition 
   
+  param set hive.exec.dynamic.partition.mode=nonstrict;
+  
   file : records.csv (data folder)
 staging table name : user_staging
 partiton table name user_partition
 
 
 buckets
+param set hive.enforce.bucketing= true;
 file name : records.csv
 bucket table name : user_bucket (15 buckets column city sort firstname,lastname) -- stored as AVROFILE
 
