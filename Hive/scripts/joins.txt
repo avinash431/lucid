@@ -61,3 +61,6 @@ insert overwrite table dataset2_bucketed1 select * from dataset2 sort by first_n
 
 SELECT dataset1_bucketed.first_name, dataset1_bucketed.eid, dataset2_bucketed1.eid FROM dataset1_bucketed JOIN dataset2_bucketed1 ON dataset1_bucketed.first_name = dataset2_bucketed1.first_name ;
 
+set hive.execution.engine=spark;
+
+run the above queries with spark as execution engine.
