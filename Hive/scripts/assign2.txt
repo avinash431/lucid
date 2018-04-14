@@ -1,0 +1,38 @@
+CREATE TABLE partitioned_user(
+	firstname VARCHAR(64),
+	lastname  VARCHAR(64),
+	address   STRING,
+	city 	  VARCHAR(64),
+	post      STRING,
+	phone1    VARCHAR(64),
+	phone2    STRING,
+	email     STRING,
+	web       STRING
+	)
+	PARTITIONED BY (country VARCHAR(64), state VARCHAR(64)); 
+  
+  DESCRIBE FORMATTED partitioned_user;
+  
+  -- static partition
+  
+  LOAD DATA LOCAL INPATH 'CA.csv'INTO TABLE partitioned_user PARTITION (country = 'US', state = 'CA'); // file is in data folder CA.csv
+  
+ 
+  -- dynamic partition 
+  
+  file : records.csv (data folder)
+staging table name : user_staging
+partiton table name user_partition
+
+
+buckets
+file name : records.csv
+bucket table name : user_bucket (15 buckets column city sort firstname,lastname) -- stored as AVROFILE
+
+partition and buckets
+table name : user_part_bucket
+partition colmn : country , state
+bucket column : city
+sort column : firstname,lastname
+file format : ORC
+compression : Snappy
