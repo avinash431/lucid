@@ -5,9 +5,9 @@ marks array(int)
 result map(total string distinction string)
 address struct(aptno:int,street string,city string,pincode int
 
-create table students_total with the column id,name,total,pincode
+create table students_total with the column id,name,total,pincode with orc format
 
-create table students_result with the column id,name,distinction,city
+create table students_result with the column id,name,distinction,city with parquet format
 
 fetch max marks from the column marks in the student table (select)
 
