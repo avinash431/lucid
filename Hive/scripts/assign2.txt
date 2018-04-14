@@ -16,6 +16,7 @@ CREATE TABLE partitioned_user(
   -- static partition
   
   LOAD DATA LOCAL INPATH 'CA.csv'INTO TABLE partitioned_user PARTITION (country = 'US', state = 'CA'); // file is in data folder CA.csv
+  LOAD DATA LOCAL INPATH 'NY.csv'INTO TABLE partitioned_user PARTITION (country = 'US', state = 'NY')
   
  
   -- dynamic partition 
