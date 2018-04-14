@@ -1,0 +1,63 @@
+-- create the table records
+
+create table records(fname string,lname string,address string,country string,city string,state string,post string,phone1 string,phone2 string,email string,web string) row format delimited fields terminated by ',' TBLPROPERTIES('skip.header.line.count'='1')
+
+load data local inpath 'records.csv' into table records;
+
+insert overwrite local directory '/home/cloudera/names' row format delimited fields terminated by ',' select distinct fname,lname from records limit 200;
+
+create table names(fname string,lname string) row format delimited fields terminated by ',';
+
+load data 'names/' into table names;
+
+insert into table names values('Avinash','Seethalam'),('Prasanna','Palakodeti'),('Manju','Shivanji');
+
+select n.fname,n.lname,r.city from records r join names n on r.fname=n.fname;
+
+select n.fname,n.lname,r.city from records r left outer join names n on r.fname=n.fname;
+
+select n.fname,n.lname,r.city from records r right outer join names n on r.fname=n.fname;
+
+select n.fname,n.lname,r.city from records r full outer join names n on r.fname=n.fname;
+
+CREATE TABLE IF NOT EXISTS dataset1 ( eid int, first_name String, last_name String, email String, gender String, ip_address String) row format delimited fields terminated BY ',' tblproperties("skip.header.line.count"="1");
+
+CREATE TABLE IF NOT EXISTS dataset2 ( eid int, first_name String, last_name String) row format delimited fields terminated BY ',' tblproperties("skip.header.line.count"="1");
+
+hive.mapjoin.smalltable.filesize=(default it will be 25MB)
+hive.auto.convert.join=true
+	
+SELECT /*+ MAPJOIN(dataset2) */ dataset1.first_name, dataset1.eid,dataset2.eid FROM dataset1 JOIN dataset2 ON dataset1.first_name = dataset2.first_name;
+
+SELECT dataset1.first_name, dataset1.eid,dataset2.eid FROM dataset1 JOIN dataset2 ON dataset1.first_name = dataset2.first_name;
+
+Bucket map join
+
+CREATE TABLE IF NOT EXISTS dataset1_bucketed ( eid int,first_name String, last_name String, email String, gender String, ip_address String) clustered by(first_name) into 4 buckets row format delimited fields terminated BY ',';
+
+	
+CREATE TABLE IF NOT EXISTS dataset2_bucketed (eid int,first_name String, last_name String) clustered by(first_name) into 8 buckets row format delimited fields terminated BY ',' ;
+
+insert into dataset1_bucketed select * from dataset1;
+	
+insert into dataset2_bucketed select * from dataset2;
+
+SELECT dataset1_bucketed.first_name,dataset1_bucketed.eid, dataset2_bucketed.eid FROM dataset1_bucketed JOIN dataset2_bucketed ON dataset1_bucketed.first_name = dataset2_bucketed.first_name ;
+
+Sort Merge Bucket(SMB) Map Join
+
+Set hive.input.format=org.apache.hadoop.hive.ql.io.BucketizedHiveInputFormat;
+set hive.optimize.bucketmapjoin = true;
+set hive.optimize.bucketmapjoin.sortedmerge = true;
+
+insert overwrite table dataset1_bucketed select * from dataset1 sort by first_name;
+insert overwrite table dataset2_bucketed select * from dataset2 sort by first_name;
+
+SELECT dataset1_bucketed.first_name,dataset1_bucketed.eid, dataset2_bucketed.eid FROM dataset1_bucketed JOIN dataset2_bucketed ON dataset1_bucketed.first_name = dataset2_bucketed.first_name ;
+
+CREATE TABLE IF NOT EXISTS dataset2_bucketed1 (eid int,first_name String, last_name String) clustered by(first_name) into 4 buckets row format delimited fields terminated BY ',' ;
+
+insert overwrite table dataset2_bucketed1 select * from dataset2 sort by first_name;
+
+SELECT dataset1_bucketed.first_name, dataset1_bucketed.eid, dataset2_bucketed1.eid FROM dataset1_bucketed JOIN dataset2_bucketed1 ON dataset1_bucketed.first_name = dataset2_bucketed1.first_name ;
+
