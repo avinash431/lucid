@@ -26,12 +26,18 @@ CREATE TABLE IF NOT EXISTS dataset2 ( eid int, first_name String, last_name Stri
 
 hive.mapjoin.smalltable.filesize=(default it will be 25MB)
 hive.auto.convert.join=true
-	
+
+-- set the above auto convert param to false and run all the join queries, check the time taken
+
+-- explicit mention of map join
+
 SELECT /*+ MAPJOIN(dataset2) */ dataset1.first_name, dataset1.eid,dataset2.eid FROM dataset1 JOIN dataset2 ON dataset1.first_name = dataset2.first_name;
 
 SELECT dataset1.first_name, dataset1.eid,dataset2.eid FROM dataset1 JOIN dataset2 ON dataset1.first_name = dataset2.first_name;
 
-Bucket map join
+set hive.auto.convert.join=true;
+
+Bucket  join
 
 CREATE TABLE IF NOT EXISTS dataset1_bucketed ( eid int,first_name String, last_name String, email String, gender String, ip_address String) clustered by(first_name) into 4 buckets row format delimited fields terminated BY ',';
 
