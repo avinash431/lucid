@@ -8,7 +8,7 @@ insert overwrite local directory '/home/cloudera/names' row format delimited fie
 
 create table names(fname string,lname string) row format delimited fields terminated by ',';
 
-load data 'names/' into table names;
+load data local inpath 'names/' into table names;
 
 insert into table names values('Avinash','Seethalam'),('Prasanna','Palakodeti'),('Manju','Shivanji');
 
