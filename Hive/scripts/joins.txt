@@ -20,10 +20,6 @@ select n.fname,n.lname,r.city from records r right outer join names n on r.fname
 
 select n.fname,n.lname,r.city from records r full outer join names n on r.fname=n.fname;
 
-CREATE TABLE IF NOT EXISTS dataset1 ( eid int, first_name String, last_name String, email String, gender String, ip_address String) row format delimited fields terminated BY ',' tblproperties("skip.header.line.count"="1");
-
-CREATE TABLE IF NOT EXISTS dataset2 ( eid int, first_name String, last_name String) row format delimited fields terminated BY ',' tblproperties("skip.header.line.count"="1");
-
 hive.mapjoin.smalltable.filesize=(default it will be 25MB)
 hive.auto.convert.join=true
 
@@ -31,13 +27,15 @@ hive.auto.convert.join=true
 
 -- explicit mention of map join
 
-SELECT /*+ MAPJOIN(dataset2) */ dataset1.first_name, dataset1.eid,dataset2.eid FROM dataset1 JOIN dataset2 ON dataset1.first_name = dataset2.first_name;
-
-SELECT dataset1.first_name, dataset1.eid,dataset2.eid FROM dataset1 JOIN dataset2 ON dataset1.first_name = dataset2.first_name;
+select /*+ MAPJOIN(dataset2) */ n.fname,n.lname,r.city from records r join names n on r.fname=n.fname;
 
 set hive.auto.convert.join=true;
 
 Bucket  join
+
+CREATE TABLE IF NOT EXISTS dataset1 ( eid int, first_name String, last_name String, email String, gender String, ip_address String) row format delimited fields terminated BY ',' tblproperties("skip.header.line.count"="1");
+
+CREATE TABLE IF NOT EXISTS dataset2 ( eid int, first_name String, last_name String) row format delimited fields terminated BY ',' tblproperties("skip.header.line.count"="1");
 
 CREATE TABLE IF NOT EXISTS dataset1_bucketed ( eid int,first_name String, last_name String, email String, gender String, ip_address String) clustered by(first_name) into 4 buckets row format delimited fields terminated BY ',';
 
