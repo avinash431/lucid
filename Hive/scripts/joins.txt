@@ -27,7 +27,7 @@ hive.auto.convert.join=true
 
 -- explicit mention of map join
 
-select /*+ MAPJOIN(dataset2) */ n.fname,n.lname,r.city from records r join names n on r.fname=n.fname;
+select /*+ MAPJOIN(names) */ n.fname,n.lname,r.city from records r join names n on r.fname=n.fname;
 
 set hive.auto.convert.join=true;
 
