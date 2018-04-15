@@ -1,0 +1,7 @@
+-- create udf function and generate the jar file
+
+-- add the jar file to the distributed cache
+
+-- create the temporary function 
+
+-- run that function
