@@ -7,7 +7,7 @@ CREATE TABLE orders(
   
 load data local inpath 'udaf.txt' into table orders;
 
--- setup the Myudtf.java class 
+-- setup the MeanUDAF class 
 
 -- compile the jar and add that jar 
 
