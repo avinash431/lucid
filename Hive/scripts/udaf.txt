@@ -1,0 +1,18 @@
+CREATE TABLE orders(
+  id bigint, 
+  product_id string, 
+  customer_id bigint, 
+  quantity int, 
+  amount double) row format delimited fields terminated by '\t';
+  
+load data local inpath 'orders.txt' into table orders;
+
+-- setup the Myudtf.java class 
+
+-- compile the jar and add that jar 
+
+-- create temporary function MeanFunc
+
+-- run that function for the table orders.
+
+select id, MeanFunc(amount) from orders group by id;
