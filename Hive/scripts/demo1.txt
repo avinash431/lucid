@@ -47,21 +47,6 @@ select address, count(*) as customer_count from customers group by address;
 
 select * from customers limit 1;
 
-
-Terminal
-————————
-
-bin/beeline -u jdbc:hive2:// -e "select * from customers"
-
-inside beeline source test.hql
-select * from customers;
-
-bin/beeline -u jdbc:hive2:// -f test.hql 
-
-
-Hive
-————
-
 create table if not exists orders (
 id bigint, 
 product_id string, 
