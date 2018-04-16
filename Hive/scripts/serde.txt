@@ -4,7 +4,7 @@ hadoop fs -mkdir -p /user/lucid/hive/serde/input
 hadoop fs -mkdir -p /user/lucid/hive/serde/jar
 hadoop fs -put data/sales.csv /user/lucid/hive/serde/input
 
--- put csv-serde file into hdfs directory /user/cloudera/
+-- put csv-serde file(it's in the scripts folder) into hdfs directory /user/cloudera/
 hadoop fs -put setup/csv-serde-1.1.2-0.11.0-all.jar /user/lucid/hive/serde/jar/
 
 -- switch to hue and run this in hive to install csv serde
