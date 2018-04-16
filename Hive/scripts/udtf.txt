@@ -1,0 +1,14 @@
+CREATE TABLE phone(
+  id string);
+  
+load data local inpath 'udtf.txt' into table phone;
+
+-- setup the Myudtf class in eclipse
+
+-- compile the jar and add the jar
+
+-- create temporary function fun2 for the above class 
+
+-- run the function fn2
+
+select fun2(id) from phone
