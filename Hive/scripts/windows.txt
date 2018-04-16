@@ -18,6 +18,10 @@ SELECT dep_name, emp_name, salary,RANK() OVER (PARTITION BY dep_name ORDER BY sa
 
 SELECT dep_name, emp_name, salary,row_number() OVER (PARTITION BY dep_name ORDER BY salary DESC) AS rnk FROM t_employee;
 
+SELECT first_value(emp_name), OVER (PARTITION BY dep_name ORDER BY salary DESC) AS rnk FROM t_employee;
+
+SELECT last_value(emp_name), OVER (PARTITION BY dep_name ORDER BY salary DESC) AS rnk FROM t_employee;
+
 SELECT COUNT(id) OVER (PARTITION BY dept_name),SUM(salary) OVER (PARTITION BY dep_name) FROM t_employee;
 
 SELECT salary,CUME_DIST() OVER (ORDER BY salary) AS pct_cum,PERCENT_RANK() OVER (ORDER BY salary) AS pct_rank FROM t_employee;
