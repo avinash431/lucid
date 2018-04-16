@@ -5,7 +5,7 @@ CREATE TABLE orders(
   quantity int, 
   amount double) row format delimited fields terminated by '\t';
   
-load data local inpath 'orders.txt' into table orders;
+load data local inpath 'udaf.txt' into table orders;
 
 -- setup the Myudtf.java class 
 
