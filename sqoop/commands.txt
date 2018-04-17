@@ -105,9 +105,14 @@ sqoop import \
   --m 1 \
   --append \
   --target-dir=/user/lucid/sqoop/sample_products
-
-hdfs dfs -rm -r -f /user/lucid/sqoop/sample_products 
-
+ 
+ 
+ --mysql
+ 
+ INSERT INTO sample_products VALUES (1002, 'PEN', 'Pen Red', 5000, 1.23,current_timestamp);
+ INSERT INTO sample_products VALUES (1003, 'PEN', 'Pen Red', 5000, 1.23,current_timestamp);
+ INSERT INTO sample_products VALUES (1004, 'PEN', 'Pen Red', 5000, 1.23,current_timestamp);
+ INSERT INTO sample_products VALUES (1004, 'PEN', 'Pen Red', 5000, 1.23,current_timestamp);
 -- incremental append
 sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
@@ -117,7 +122,7 @@ sqoop import \
   --m 1 \
   --incremental append \
   --check-column productID \
-  --last-value 102 \
+  --last-value 10001 \
   --target-dir=/user/lucid/sqoop/sample_products
   
  --incremental lastmodifed
