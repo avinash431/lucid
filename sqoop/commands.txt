@@ -192,37 +192,6 @@ sqoop import-all-tables \
   --as-avrodatafile \
   --warehouse-dir=/user/hive/warehouse/retail_stage.db
 
-
-sqoop import-all-tables \
-  --num-mappers 1 \
-  --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
-  --username=retail_dba \
-  --password=cloudera \
-  --hive-import \
-  --hive-overwrite \
-  --create-hive-table \
-  --compress \
-  --compression-codec org.apache.hadoop.io.compress.SnappyCodec \
-  --outdir java_files
-
-
-
--- Importing table with out primary key using multiple threads (split-by)
--- When using split-by, using indexed column is highly desired
--- If the column is not indexed then performance will be bad 
--- because of full table scan by each of the thread
-sqoop import \
-  --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
-  --username=retail_dba \
-  --password=cloudera \
-  --table departments \
-  --target-dir /user/hive/warehouse/retail_ods.db/departments \
-  --append \
-  --fields-terminated-by '|' \
-  --lines-terminated-by '\n' \
-  --split-by department_id \
-  --outdir java_files
-
 -- Getting delta (--where)
 sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
@@ -235,21 +204,6 @@ sqoop import \
   --lines-terminated-by '\n' \
   --split-by department_id \
   --where "department_id > 7" \
-  --outdir java_files
-
--- Incremental load
-sqoop import \
-  --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
-  --username=retail_dba \
-  --password=cloudera \
-  --table departments \
-  --target-dir /user/hive/warehouse/retail_ods.db/departments \
-  --append \
-  --fields-terminated-by '|' \
-  --lines-terminated-by '\n' \
-  --check-column "department_id" \
-  --incremental append \
-  --last-value 7 \
   --outdir java_files
 
 sqoop job --create sqoop_job \
@@ -301,6 +255,19 @@ sqoop import \
   --hive-import \
   --hive-overwrite \
   --hive-table departments_test \
+  --outdir java_files
+
+
+sqoop import-all-tables \
+  --num-mappers 1 \
+  --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
+  --username=retail_dba \
+  --password=cloudera \
+  --hive-import \
+  --hive-overwrite \
+  --create-hive-table \
+  --compress \
+  --compression-codec org.apache.hadoop.io.compress.SnappyCodec \
   --outdir java_files
 
 --Connect to mysql and create database for reporting database
