@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS sample_products (
          name         VARCHAR(30)   NOT NULL DEFAULT '',
          quantity     INT UNSIGNED  NOT NULL DEFAULT 0,
          price        DECIMAL(7,2)  NOT NULL DEFAULT 99999.99,
-         cur_timestamp TIMESTAMP(8)
+         cur_timestamp TIMESTAMP(8) DEFAULT CURRENT_TIMESTAMP
        );
 
 INSERT INTO sample_products VALUES (1001, 'PEN', 'Pen Red', 5000, 1.23);
