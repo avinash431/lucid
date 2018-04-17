@@ -50,7 +50,7 @@ sqoop import \
   --table departments \
   --as-sequencefile \
   --num-mappers 8 \
-  --target-dir=/user/lucid/sqoop/squence-departments
+  --target-dir=/user/lucid/sqoop/sequence-departments
 
 
 --mysql create table without primary key and try to import via sqoop
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS sample_products (
          productCode  CHAR(3)       NOT NULL DEFAULT '',
          name         VARCHAR(30)   NOT NULL DEFAULT '',
          quantity     INT UNSIGNED  NOT NULL DEFAULT 0,
-         price        DECIMAL(7,2)  NOT NULL DEFAULT 99999.99
+         price        DECIMAL(7,2)  NOT NULL DEFAULT 99999.99,
          cur_timestamp TIMESTAMP(8)
        );
 
