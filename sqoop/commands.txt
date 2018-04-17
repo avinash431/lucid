@@ -140,7 +140,7 @@ sqoop import \
   --username=retail_dba \
   --password=cloudera \
   --table departments \
-  --target-dir /user/cloudera/departments \
+  --target-dir /user/lucid/sqoop/query_departments \
   -m 2 \
   --boundary-query "select 2, 8 from departments limit 1" \
   --columns department_id,department_name
@@ -160,6 +160,16 @@ sqoop import \
   --num-mappers 1 \
   --outdir java_files
 
+-- options file
+-- create a file with all the import ones
+vi options.txt
+import
+--connect "jdbc://mysql://quickstart.cloudera:3306/retail_db"
+--username retail_dba
+--password cloudera
+:wq
+
+sqoop--options-file options.txt --table departments --target-dir /user/lucid/sqoop/options_department
 
 sqoop import-all-tables \
   -m 12 \
@@ -251,19 +261,6 @@ sqoop job --show sqoop_job
 sqoop job --exec sqoop_job
 
 -- Hive related
--- Overwrite existing data associated with hive table (hive-overwrite)
-sqoop import \
-  --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
-  --username=retail_dba \
-  --password=cloudera \
-  --table departments \
-  --fields-terminated-by '|' \
-  --lines-terminated-by '\n' \
-  --hive-home /user/hive/warehouse/retail_ods.db \
-  --hive-import \
-  --hive-overwrite \
-  --hive-table departments \
-  --outdir java_files
 
 --Create hive table example
 sqoop import \
@@ -277,6 +274,20 @@ sqoop import \
   --hive-import \
   --hive-table departments_test \
   --create-hive-table \
+  --outdir java_files
+  
+ -- Overwrite existing data associated with hive table (hive-overwrite)
+sqoop import \
+  --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
+  --username=retail_dba \
+  --password=cloudera \
+  --table departments \
+  --fields-terminated-by '|' \
+  --lines-terminated-by '\n' \
+  --hive-home /user/hive/warehouse/retail_ods.db \
+  --hive-import \
+  --hive-overwrite \
+  --hive-table departments_test \
   --outdir java_files
 
 --Connect to mysql and create database for reporting database
@@ -326,7 +337,7 @@ sqoop export --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --input-null-non-string -1
 
 --Merge process begins
-hadoop fs -mkdir /user/cloud-era/sqoop_merge
+hadoop fs -mkdir /user/lucid/sqoop_merge
 
 --Initial load
 sqoop import \
@@ -335,7 +346,7 @@ sqoop import \
   --password=cloudera \
   --table departments \
   --as-textfile \
-  --target-dir=/user/cloudera/sqoop_merge/departments
+  --target-dir=/user/lucid/sqoop_merge/departments
 
 
 --New load
@@ -345,16 +356,16 @@ sqoop import \
   --password=cloudera \
   --table departments \
   --as-textfile \
-  --target-dir=/user/cloudera/sqoop_merge/departments_delta \
+  --target-dir=/user/lucid/sqoop_merge/departments_delta \
   --where "department_id >= 9000"
 
 hadoop fs -cat /user/cloudera/sqoop_merge/departments_delta/part*
 
 --Merge
 sqoop merge --merge-key department_id \
-  --new-data /user/cloudera/sqoop_merge/departments_delta \
-  --onto /user/cloudera/sqoop_merge/departments \
-  --target-dir /user/cloudera/sqoop_merge/departments_stage \
+  --new-data /user/lucid/sqoop_merge/departments_delta \
+  --onto /user/lucid/sqoop_merge/departments \
+  --target-dir /user/lucid/sqoop_merge/departments_stage \
   --class-name departments \
   --jar-file <get_it_from_last_import>
 
