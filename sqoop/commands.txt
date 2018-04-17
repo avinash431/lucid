@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS sample_products (
          name         VARCHAR(30)   NOT NULL DEFAULT '',
          quantity     INT UNSIGNED  NOT NULL DEFAULT 0,
          price        DECIMAL(7,2)  NOT NULL DEFAULT 99999.99
+         cur_timestamp TIMESTAMP(8)
        );
 
 INSERT INTO sample_products VALUES (1001, 'PEN', 'Pen Red', 5000, 1.23);
@@ -76,7 +77,7 @@ INSERT INTO sample_products (productCode, name, quantity, price) VALUES('PEC', '
 INSERT INTO sample_products (productCode, name) VALUES ('PEC', 'Pencil HB');
 
 
---Default(it will fail)
+--Default(it will fail since there is no pk)
 sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --username=retail_dba \
@@ -84,6 +85,7 @@ sqoop import \
   --table sample_products \
   --target-dir=/user/lucid/sqoop/sample_products
 
+--if there is no pk then the number of mappers has to be 1 or the split-by has to be mentioned
 sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --username=retail_dba \
@@ -92,6 +94,7 @@ sqoop import \
   --m 1 \
   --target-dir=/user/lucid/sqoop/sample_products
 
+-- if there is no pk then the no: of mappers has to be 1 or the split-by has to be mentioned.
 sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --username=retail_dba \
@@ -100,6 +103,7 @@ sqoop import \
   --split-by quantity \
   --target-dir=/user/lucid/sqoop/sample_products_quantity
 
+--normal append
 sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --username=retail_dba \
@@ -109,7 +113,9 @@ sqoop import \
   --append \
   --target-dir=/user/lucid/sqoop/sample_products
 
+hdfs dfs -rm -r -f /user/lucid/sqoop/sample_products 
 
+-- incremental append
 sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --username=retail_dba \
@@ -120,6 +126,17 @@ sqoop import \
   --check-column productID \
   --last-value 102 \
   --target-dir=/user/lucid/sqoop/sample_products
+  
+ --incremental lastmodifed
+ sqoop import
+		--connect "jdbc:mysql://quickstart.cloudera.com:3306"
+		--username retail_dba
+		--password cloudera
+		--table sample_products
+		--incremental lastmodified
+		--check-column cur_timestamp
+		--last-value <last-stored timestamp value>
+		--target-dir /user/lucid/sqoop/sample_products
 
 
 -- query and split-by
@@ -131,8 +148,6 @@ sqoop import \
   --target-dir /user/lucid/sqoop/order_join \
   --split-by order_id \
   --num-mappers 4
-
-
 
 -- Boundary Query and columns
 sqoop import \
