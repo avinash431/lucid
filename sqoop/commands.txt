@@ -40,7 +40,17 @@ sqoop import \
   --username=retail_dba \
   --password=cloudera \
   --table departments \
-  --target-dir=/user/lucid/sqoop/textfile-departments
+  --target-dir=/user/lucid/sqoop/departments
+  
+-- direct
+
+sqoop import \
+  --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
+  --username=retail_dba \
+  --password=cloudera \
+  --table customers \
+  --target-dir=/user/lucid/sqoop/customers \
+  --direct
 
 
 sqoop import \
@@ -55,19 +65,13 @@ sqoop import \
 
 --mysql create table without primary key and try to import via sqoop
 
-CREATE TABLE IF NOT EXISTS sample_products (
-         productID    INT UNSIGNED  ,
-         productCode  CHAR(3)       NOT NULL DEFAULT '',
-         name         VARCHAR(30)   NOT NULL DEFAULT '',
-         quantity     INT UNSIGNED  NOT NULL DEFAULT 0,
-         price        DECIMAL(7,2)  NOT NULL DEFAULT 99999.99,
-         cur_timestamp TIMESTAMP(8) DEFAULT CURRENT_TIMESTAMP
-       );
+create table st1(id int, name varchar(16), ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
 
-INSERT INTO sample_products VALUES (1001, 'PEN', 'Pen Red', 5000, 1.23,current_timestamp);
-INSERT INTO sample_products VALUES(1002, 'PEN', 'Pen Blue',  8000, 1.25,current_timestamp),(1003, 'PEN', 'Pen Black', 2000, 1.25,current_timestamp);
-INSERT INTO sample_products (productID,productCode, name, quantity, price,cur_timestamp) VALUES(1004,'PEC', 'Pencil 2B', 10000, 0.48,current_timestamp);
-INSERT INTO sample_products (productID,productCode, name,cur_timestamp) VALUES (1005,'PEC', 'Pencil HB',current_timestamp);
+
+insert into  st1(id,name) values(1,'avinash');
+insert into  st1(id,name) values(2,'prasanna');
+insert into  st1(id,name) values(3,'akhila');
+insert into  st1(id,name) values(4,'anupama');
 
 
 --Default(it will fail since there is no pk)
@@ -75,68 +79,77 @@ sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --username=retail_dba \
   --password=cloudera \
-  --table sample_products \
-  --target-dir=/user/lucid/sqoop/sample_products
+  --table st1 \
+  --target-dir=/user/lucid/sqoop/st1
 
 --if there is no pk then the number of mappers has to be 1 or the split-by has to be mentioned
 sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --username=retail_dba \
   --password=cloudera \
-  --table sample_products \
+  --table st1 \
   --m 1 \
-  --target-dir=/user/lucid/sqoop/sample_products
+  --target-dir=/user/lucid/sqoop/st1
 
 -- if there is no pk then the no: of mappers has to be 1 or the split-by has to be mentioned.
 sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --username=retail_dba \
   --password=cloudera \
-  --table sample_products \
-  --split-by quantity \
-  --target-dir=/user/lucid/sqoop/sample_products_quantity
+  --table st1 \
+  --split-by id \
+  --target-dir=/user/lucid/sqoop/st1_id
 
 --normal append
 sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --username=retail_dba \
   --password=cloudera \
-  --table sample_products \
+  --table st1 \
   --m 1 \
   --append \
-  --target-dir=/user/lucid/sqoop/sample_products
+  --target-dir=/user/lucid/sqoop/st1
  
  
  --mysql
  
- INSERT INTO sample_products VALUES (1006, 'PEN', 'Pen Red', 5000, 1.23,current_timestamp);
- INSERT INTO sample_products VALUES (1007, 'PEN', 'Pen Red', 5000, 1.23,current_timestamp);
- INSERT INTO sample_products VALUES (1008, 'PEN', 'Pen Red', 5000, 1.23,current_timestamp);
- INSERT INTO sample_products VALUES (1009, 'PEN', 'Pen Red', 5000, 1.23,current_timestamp);
- 
+insert into  st1(id,name) values(5,'urmila');
+insert into  st1(id,name) values(6,'harshita');
+insert into  st1(id,name) values(7,'ramlakshmi'); 
+
+
+
 -- incremental append
 sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --username=retail_dba \
   --password=cloudera \
-  --table sample_products \
-  --m 1 \
+  --table st1 \
   --incremental append \
-  --check-column productID \
-  --last-value 10001 \
-  --target-dir=/user/lucid/sqoop/sample_products
+  --check-column id \
+  --m 1 \
+  --last-value 4 \
+  --target-dir=/user/lucid/sqoop/st1 \
+  --merge-key id
   
+ --mysql
+ 
+ update st1 set name='subbarao' where id=1;
+ update st1 set name='katyani' where id =2;
+ insert into st1(id,name) values(8,'prasad');
+ insert into st1(id,name) values(9,'manju');
+   
  --incremental lastmodifed
- sqoop import
-		--connect "jdbc:mysql://quickstart.cloudera.com:3306"
-		--username retail_dba
-		--password cloudera
-		--table sample_products
-		--incremental lastmodified
-		--check-column cur_timestamp
-		--last-value <last-stored timestamp value>
-		--target-dir /user/lucid/sqoop/sample_products
-
+ sqoop import \
+  --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
+  --username=retail_dba \
+  --password=cloudera \
+  --table st1 \
+  --incremental lastmodified \
+  --check-column ts \
+  --target-dir /user/lucid/sqoop/st1 \
+  --merge-key id \
+  --m 1
 
 -- query and split-by
 sqoop import \
@@ -155,7 +168,7 @@ sqoop import \
   --password=cloudera \
   --table departments \
   --target-dir /user/lucid/sqoop/query_departments \
-  -m 2 \
+  --m 2 \
   --boundary-query "select 2, 8 from departments limit 1" \
   --columns department_id,department_name
 
@@ -173,23 +186,27 @@ sqoop import \
   --lines-terminated-by '\n' \
   --num-mappers 1 \
   --outdir java_files
+  
 
 -- options file
 -- create a file with all the import ones
 vi options.txt
 import
---connect "jdbc://mysql://quickstart.cloudera:3306/retail_db"
---username retail_dba
---password cloudera
+--connect 
+"jdbc:mysql://quickstart.cloudera:3306/retail_db"
+--username 
+retail_dba
+--password 
+cloudera
 :wq
 
-sqoop--options-file options.txt --table departments --target-dir /user/lucid/sqoop/options_department
+sqoop --options-file options.txt --table departments --target-dir /user/lucid/sqoop/options_department
 
 sqoop import-all-tables \
   -m 12 \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --username=retail_dba \
-  --password=cloud-era \
+  --password=cloudera \
   --as-avrodatafile \
   --warehouse-dir=/user/hive/warehouse/retail_stage.db
 
@@ -249,13 +266,13 @@ sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --username=retail_dba \
   --password=cloudera \
-  --table departments \
+  --table categories \
   --fields-terminated-by '|' \
   --lines-terminated-by '\n' \
   --hive-home /user/hive/warehouse/retail_ods.db \
   --hive-import \
   --hive-overwrite \
-  --hive-table departments_test \
+  --hive-table categories \
   --outdir java_files
 
 
@@ -283,7 +300,7 @@ exit;
 
 --For certification change database name retail_rpt_db to retail_db
 sqoop export --connect "jdbc:mysql://quickstart.cloudera:3306/retail_rpt_db" \
-       --username retail_dab \
+       --username retail_dba \
        --password cloudera \
        --table departments \
        --export-dir /user/hive/warehouse/retail_ods.db/departments \
@@ -325,40 +342,49 @@ sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --username=retail_dba \
   --password=cloudera \
-  --table departments \
+  --table st1 \
   --as-textfile \
-  --target-dir=/user/lucid/sqoop_merge/departments
+  --split-by id \
+  --target-dir=/user/lucid/sqoop_merge/st1
 
+insert into st1(id,name) values(10,'shankar');
+insert into st1(id,name) values(11,'rajesh');
 
 --New load
 sqoop import \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
   --username=retail_dba \
   --password=cloudera \
-  --table departments \
+  --table st1 \
   --as-textfile \
-  --target-dir=/user/lucid/sqoop_merge/departments_delta \
-  --where "department_id >= 9000"
+  --target-dir=/user/lucid/sqoop_merge/st1_delta \
+  --split-by id \
+  --where "id >=10"
+  
+  sqoop codegen \
+  --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \
+  --username=retail_dba \
+  --password=cloudera \
+  --table st1
 
-hadoop fs -cat /user/cloudera/sqoop_merge/departments_delta/part*
 
 --Merge
-sqoop merge --merge-key department_id \
-  --new-data /user/lucid/sqoop_merge/departments_delta \
-  --onto /user/lucid/sqoop_merge/departments \
-  --target-dir /user/lucid/sqoop_merge/departments_stage \
-  --class-name departments \
+sqoop merge --merge-key id \
+  --new-data /user/lucid/sqoop_merge/st1_delta \
+  --onto /user/lucid/sqoop_merge/st1 \
+  --target-dir /user/lucid/sqoop_merge/st1_stage \
+  --class-name st1 \
   --jar-file <get_it_from_last_import>
 
-hadoop fs -cat /user/cloudera/sqoop_merge/departments_stage/part*
+hadoop fs -cat /user/lucid/sqoop_merge/st1_stage/part*
 
 --Delete old directory
-hadoop fs -rm -R /user/cloudera/sqoop_merge/departments
+hadoop fs -rm -R /user/cloudera/sqoop_merge/st1
 
 --Move/rename stage directory to original directory
-hadoop fs -mv /user/cloudera/swoop_merge/departments_stage /user/cloudera/sqoop_merge/departments 
+hadoop fs -mv /user/cloudera/sqoop_merge/st1_stage /user/cloudera/sqoop_merge/st1 
 
 --Validate that original directory have merged data
-hadoop fs -cat /user/cloudera/sqoop_merge/departments/part*
+hadoop fs -cat /user/cloudera/sqoop_merge/st1/part*
 
 --Merge process ends
