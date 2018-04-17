@@ -64,10 +64,10 @@ CREATE TABLE IF NOT EXISTS sample_products (
          cur_timestamp TIMESTAMP(8) DEFAULT CURRENT_TIMESTAMP
        );
 
-INSERT INTO sample_products VALUES (1001, 'PEN', 'Pen Red', 5000, 1.23);
-INSERT INTO sample_products VALUES(NULL, 'PEN', 'Pen Blue',  8000, 1.25),(NULL, 'PEN', 'Pen Black', 2000, 1.25);
-INSERT INTO sample_products (productCode, name, quantity, price) VALUES('PEC', 'Pencil 2B', 10000, 0.48),('PEC', 'Pencil 2H', 8000, 0.49);
-INSERT INTO sample_products (productCode, name) VALUES ('PEC', 'Pencil HB');
+INSERT INTO sample_products VALUES (1001, 'PEN', 'Pen Red', 5000, 1.23,current_timestamp);
+INSERT INTO sample_products VALUES(NULL, 'PEN', 'Pen Blue',  8000, 1.25,current_timestamp),(NULL, 'PEN', 'Pen Black', 2000, 1.25,current_timestamp);
+INSERT INTO sample_products (productCode, name, quantity, price,cur_timestamp) VALUES('PEC', 'Pencil 2B', 10000, 0.48),('PEC', 'Pencil 2H', 8000, 0.49,current_timestamp);
+INSERT INTO sample_products (productCode, name,cur_timestamp) VALUES ('PEC', 'Pencil HB',current_timestamp);
 
 
 --Default(it will fail since there is no pk)
