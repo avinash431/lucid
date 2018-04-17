@@ -40,7 +40,6 @@ sqoop import \
   --username=retail_dba \
   --password=cloudera \
   --table departments \
-  --as-textfile \
   --target-dir=/user/lucid/sqoop/textfile-departments
 
 
