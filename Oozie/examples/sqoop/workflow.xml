@@ -1,0 +1,16 @@
+<workflow-app name="WorkflowWithSqoopAction" xmlns="uri:oozie:workflow:0.1">
+	<start to="sqoopAction"/>
+        <action name="sqoopAction">
+                <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+                        <job-tracker>${jobTracker}</job-tracker>
+                        <name-node>${nameNode}</name-node>
+                        <command>import --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" --username retail_dba --password cloudera --table products  --direct  --target-dir /user/lucid/sqoop/sqoop_oozie</command>
+                </sqoop>
+                <ok to="end"/>
+                <error to="killJob"/>
+        </action>
+	<kill name="killJob">
+            <message>"Killed job due to error: ${wf:errorMessage(wf:lastErrorNode())}"</message>
+        </kill>
+	<end name="end" />
+</workflow-app>
