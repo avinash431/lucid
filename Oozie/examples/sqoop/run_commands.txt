@@ -1,0 +1,31 @@
+-- create a directory in HDFS
+
+hdfs dfs -mkdir -p /user/cloudera/oozieProject/workflowSqoopAction/lib/
+
+--upload the workflow.xml to the path /user/cloudera/oozieProject/workflowSqoopAction
+
+hdfs dfs -put workflow.xml /user/cloudera/oozieProject/workflowSqoopAction/
+
+--upload the mysql connectivity jar to the lib folder 
+
+hdfs dfs -put /var/lib/sqoop/mysql* /user/cloudera/oozieProject/workflowSqoopAction/lib
+
+-- set the env variable OOZIE_URL
+
+export OOZIE_URL="http://quickstart.cloudera.com:11000/oozie"
+
+--run the job.properties 
+
+oozie job -config job.properties -run
+
+-- to check the status
+
+oozie job -info <oozie-job-id> (based on the oozie run)
+
+-- to view the log file
+
+oozie job -log <oozie-job-id>
+
+-- to check the o/p
+
+hdfs dfs -ls /user/lucid/sqoop/sqoop_oozie/
