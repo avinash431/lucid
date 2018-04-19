@@ -1,0 +1,22 @@
+--create the directory in HDFS 
+
+hdfs dfs -mkdir -p /user/cloudera/oozieProject/workflowHiveAction/
+
+-- upload the hivescript and workflow.xml in the above hdfs dir
+
+hdfs dfs -put workflow.xml /user/cloudera/oozieProject/workflowHiveAction/
+hdfs dfs -put runHive.hql /user/cloudera/oozieProject/workflowHiveAction/
+
+--upload the hive-site.xml to the above dir
+
+hdfs dfs -put /etc/conf.dist/hive/hive-site.xml /user/cloudera/oozieProject/workflowHiveAction/
+
+--run the job.properties
+
+oozie job -config job.properties -run
+
+oozie job -info <oozie-job-id>
+
+oozie job -log <oozie-job-id>
+
+--check the o/p in hive
