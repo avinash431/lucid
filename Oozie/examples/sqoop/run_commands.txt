@@ -12,7 +12,7 @@ hdfs dfs -put /var/lib/sqoop/mysql* /user/cloudera/oozieProject/workflowSqoopAct
 
 -- set the env variable OOZIE_URL
 
-export OOZIE_URL="http://quickstart.cloudera.com:11000/oozie"
+export OOZIE_URL="http://quickstart.cloudera:11000/oozie"
 
 --run the job.properties 
 
