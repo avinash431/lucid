@@ -5,7 +5,7 @@
               		<job-tracker>${jobTracker}</job-tracker>
               		<name-node>${nameNode}</name-node>
    			<job-xml>${appPath}/hive-site.xml</job-xml>
-   			<script>${appPath}/runHiveLogReport.hql</script>
+   			<script>${appPath}/runHive.hql</script>
          	</hive>
          	<ok to="sendEmailSuccess"/>
          	<error to="sendEmailKillHive"/>
