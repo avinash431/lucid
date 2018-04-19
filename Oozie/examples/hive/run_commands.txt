@@ -9,7 +9,7 @@ hdfs dfs -put runHive.hql /user/cloudera/oozieProject/workflowHiveAction/
 
 --upload the hive-site.xml to the above dir
 
-hdfs dfs -put /etc/conf.dist/hive/hive-site.xml /user/cloudera/oozieProject/workflowHiveAction/
+hdfs dfs -put /etc/hive/conf.dist/hive-site.xml /user/cloudera/oozieProject/workflowHiveAction/
 
 --run the job.properties
 
