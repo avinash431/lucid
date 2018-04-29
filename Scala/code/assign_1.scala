@@ -18,8 +18,9 @@ def this(y:String,z:Boolean) = this(1,y,z)
   
 def statusReport() ={
 var print_result:String = "passed"
-if(s_result == false)
-print_result = "failed";
-println(s"Student with id $s_id whose name is $s_name has $print_result")
+if(_res == false){
+print_result = "failed"
+}
+println(s"Student with id $id whose name is $name has $print_result")
 }
 }
