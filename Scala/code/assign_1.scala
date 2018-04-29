@@ -1,20 +1,20 @@
-class SName(id:Int,name:String,result:Boolean){
-private var s_id = id
-private var s_name = name
-private var s_result = result
+class SName(s_id:Int,s_name:String,s_res:Boolean){
+private var _id=s_id
+private var _name=s_name
+private var _res=s_res
   
-def this(id:Int,name:String)=this(id,name,true)
-def this(id:Int,passed:Boolean)=this(id,"avinash",passed)
-def this(name:String,passed:Boolean)=this(1,name,passed)
-def this()=this(1,"avinash",true)
+def id_=(x:Int) = _id = x
+def name_=(y:String) = _name = y
+def res_=(z:Boolean) = _res = z
   
-def getStudentId() = s_id
-def getStudentName() = s_name
-def getStudentResult() = s_result
+def id = _id
+def name = _name
+def res = _res
   
-def setStudentId_=(id:Int)= s_id=id
-def setStudentName_=(name:String)= s_name=name
-def setStudentResult_=(result:Boolean)= s_result=result
+def this() = this(1,"avinash",true)
+def this(x:Int,y:String)=this(x,y,true)
+def this(y:String,z:Boolean) = this(1,y,z)
+
   
 def statusReport() ={
 var print_result:String = "passed"
