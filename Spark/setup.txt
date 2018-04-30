@@ -1,0 +1,28 @@
+-- create a project directory
+
+mkdir sbt-scala
+
+-- move to that directory
+
+cd sbt-scala
+
+-- create the project structure src,java,resources folder
+
+mkdir -p src/{main,test}/{java,resources,scala}
+mkdir lib project target
+touch project/plugins.sbt
+
+-- add eclipse plugin in plugins.sbt
+
+vi project/plugins.sbt
+
+addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "5.2.4")
+
+-- add conf parameters in build.sbt
+
+vi build.sbt
+
+name := "scala-spark"
+version := "1.0"
+scalaVersion := "2.11.11"
+libraryDependencies += "org.apache.spark" %% "spark-core" % "2.2.0"
