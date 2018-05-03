@@ -49,11 +49,19 @@ parallel.mapPartitions( x => List(x.next).iterator).collect
 parallel.mapPartitionsWithIndex( (index: Int, it: Iterator[Int]) => it.toList.map(x => index + ", "+x).iterator).collect
 
 
-
--- create RDD's from local file system
+-- create RDD's from local file system and pair RDD's
 
 val babyNames = sc.textFile("baby_names.csv")
 val rows = babyNames.map(line => line.split(","))
 
+val namesToCounties = rows.map(name => (name(1),name(2)))
+
+namesToCounties.groupByKey.collect
+
+val filteredRows = babyNames.filter(line => !line.contains("Count")).map(line => line.split(","))
+filteredRows.map(n => (n(1),n(4).toInt)).reduceByKey((v1,v2) => v1 + v2).collect
+filteredRows.map ( n => (n(1), n(4))).aggregateByKey(0)((k,v) => v.toInt+k, (v,k) => k+v).sortBy(_._2).collect
+filteredRows.map ( n => (n(1), n(4))).sortByKey().foreach (println _)
+filteredRows.map ( n => (n(1), n(4))).sortByKey(false).foreach (println _)
 
  
