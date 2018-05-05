@@ -49,6 +49,38 @@ parallel.mapPartitions( x => List(x.next).iterator).collect
 parallel.mapPartitionsWithIndex( (index: Int, it: Iterator[Int]) => it.toList.map(x => index + ", "+x).iterator).collect
 
 
+val data = sc.parallelize(List(1,2,3,4,5,6,7,8), 2)
+
+--map partition
+def sumfuncpartition(numbers : Iterator[Int]) : Iterator[Int] =
+{
+var sum = 1
+while(numbers.hasNext)
+{
+sum = sum + numbers.next()
+}
+return Iterator(sum)
+}
+
+data.mapPartitions(sumfuncpartition).collect
+
+-- reduce action
+
+val input = sc.parallelize(1 to 10)
+
+val sum = input.reduce((x, y) => x + y)
+
+
+-- aggregate action 
+
+val input = sc.parallelize(1 to 10)
+
+val result = input.aggregate((0, 0))(
+               (acc, value) => (acc._1 + value, acc._2 + 1),
+               (acc1, acc2) => (acc1._1 + acc2._1, acc1._2 + acc2._2))
+val avg = result._1 / result._2.toDouble
+
+
 -- create RDD's from local file system and pair RDD's
 
 val babyNames = sc.textFile("baby_names.csv")
