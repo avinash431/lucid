@@ -1,12 +1,12 @@
 -- create dataframe from memory
 
-val myRange = spark.range(1000).toDF("number")
+val df = spark.range(1000).toDF("number")
 
-myRange
+df
 
-myRange.show
+df.show
 
-myRange.printSchema
+df.printSchema
 
 df.first()
 
@@ -16,7 +16,7 @@ df.select(df.col("number") + 10)
 
 df.select("number")
 
-val divisBy2 = myRange.where("number % 2 = 0")
+val divisBy2 = df.where("number % 2 = 0")
 
 divisBy2.count()
 
@@ -43,6 +43,7 @@ val myManualSchema = new StructType(Array(
   new StructField("some", StringType, true),
   new StructField("col", StringType, true),
   new StructField("names", LongType, false)))
+
 val myRows = Seq(Row("Hello", null, 1L))
 val myRDD = spark.sparkContext.parallelize(myRows)
 val myDf = spark.createDataFrame(myRDD, myManualSchema)
@@ -72,29 +73,6 @@ val myManualSchema = StructType(Array(
 
 val df = spark.read.format("json").schema(myManualSchema)
   .load("/data/flight-data/json/2015-summary.json")
-
--- two ways to refer a column 
-
-import org.apache.spark.sql.functions.{col, column}
-col("someColumnName")
-column("someColumnName")
-
-
-
-
--- create dataframe from csv file.
-
-val df = spark.read.option("inferSchema","true").option("header","true").csv("/Users/avinash/Desktop/flight_names.csv")
-
-spark.read.option("inferSchema","true").option("header","true").csv("/Users/avinash/Desktop/flight_names.csv").schema
-
-df.show
-
-df.printSchema
-
-df.count
-
-df.take(10)
 
 -- access column via multiple ways
 
@@ -126,8 +104,7 @@ df.select(expr("*"), lit(1).as("One")).show(2)
 
 df.withColumn("numberOne", lit(1)).show(2)
 
-df.withColumn("withinCountry", expr("ORIGIN_COUNTRY_NAME == DEST_COUNTRY_NAME"))
-  .show(2)
+df.withColumn("withinCountry", expr("ORIGIN_COUNTRY_NAME == DEST_COUNTRY_NAME")).show(2)
 
 -- renaming the column
 
@@ -162,18 +139,31 @@ df.coalesce(1)
 
 -- partition the df based on the column
 
-df.repartition(col("DEST_COUNTRY_NAME"))
+df.repartition(col("DEST_COUNTRY_NAME")).rdd.getNumPartitions
 
 df.repartition(5, col("DEST_COUNTRY_NAME"))
 
+spark.conf.set("spark.sql.shuffle.partitions", "5")
+
+-- create dataframe from csv file.
+
+val df = spark.read.option("inferSchema","true").option("header","true").csv("/data/flight-data/csv/2015-summary.csv")
+
+spark.read.option("inferSchema","true").option("header","true").csv("/data/flight-data/csv/2015-summary.csv").schema
+
+df.show
+
+df.printSchema
+
+df.count
+
+df.take(10)
 
 df.sort("count").explain
 
 val sort_flights = df.sort("count")
 
 sort_flights.show
-
-spark.conf.set("spark.sql.shuffle.partitions", "5")
 
 sort_flights.sort("count").take(10)
 
@@ -185,6 +175,8 @@ SELECT DEST_COUNTRY_NAME, count(1)
 FROM flights_2015
 GROUP BY DEST_COUNTRY_NAME
 """)
+
+sqlWay.show
 
 val dataFrameWay = sort_flights.groupBy('DEST_COUNTRY_NAME).count
 
@@ -200,7 +192,9 @@ import org.apache.spark.sql.functions.max
 
 sort_flights.select(max("count")).take(1)
 
--- find the top five destination countries 
+-- find the top five destination countries via sql and df
+
+-- via spark sql
 
 val maxSql = spark.sql("""
 SELECT DEST_COUNTRY_NAME, sum(count) as destination_total
@@ -214,7 +208,9 @@ maxSql.show
 
 import org.apache.spark.sql.functions.desc
 
-flights
+-- via spark data frame
+
+sort_flights
   .groupBy("DEST_COUNTRY_NAME") 
   .sum("count") 
   .withColumnRenamed("sum(count)", "destination_total") 
@@ -222,7 +218,7 @@ flights
   .limit(5) 
   .show()
 
-flights
+sort_flights
   .groupBy("DEST_COUNTRY_NAME")
   .sum("count")
   .withColumnRenamed("sum(count)", "destination_total")
@@ -238,7 +234,7 @@ val staticDataFrame = spark.read.format("csv")
   .load("/data/retail-data/by-day/*.csv")
 
 staticDataFrame.createOrReplaceTempView("retail_data")
-val staticSchema = staticDataFrame.schema
+staticDataFrame.schema
 
 import org.apache.spark.sql.functions.{window, column, desc, col}
 
@@ -258,19 +254,18 @@ staticDataFrame
 case class Flight(DEST_COUNTRY_NAME: String,
                   ORIGIN_COUNTRY_NAME: String,
                   count: BigInt)
+
 val flightsDF = spark.read
   .parquet("/data/flight-data/parquet/2010-summary.parquet/")
-val flights = flightsDF.as[Flight]
 
-flights
+val flightsDS = flightsDF.as[Flight]
+
+flightsDS
   .filter(flight_row => flight_row.ORIGIN_COUNTRY_NAME != "Canada")
   .map(flight_row => flight_row)
   .take(5)
 
-flights
+flightsDS
   .take(5)
   .filter(flight_row => flight_row.ORIGIN_COUNTRY_NAME != "Canada")
   .map(fr => Flight(fr.DEST_COUNTRY_NAME, fr.ORIGIN_COUNTRY_NAME, fr.count + 5))
-
-
-
