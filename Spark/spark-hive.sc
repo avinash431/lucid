@@ -1,7 +1,17 @@
 -- run the below commands in clouders vmware spark
 
+-- go to super user and run the below command
+su
+password:cloudera
+
+cp /etc/hive/conf.dist/hive-site.xml /etc/spark/conf.dist/
+
+exit
+
+spark-shell
+
 // Create the DataFrame
-val df = sqlContext.read.json("examples/src/main/resources/people.json")
+val df = sqlContext.read.json("file:///usr/lib/spark/python/test_support/sql/people.json")
 
 // Show the content of the DataFrame
 df.show()
@@ -42,6 +52,11 @@ df.groupBy("age").count().show()
 // 19   1
 // 30   1
 
+-- save the dataframe as a hive table
+
+df.saveAsTable("default.peoples")
+
+-- check in hive whether the table has been created or not.
 
 -- create dataset
 
@@ -53,12 +68,21 @@ case class Person(name: String, age: Long)
 val ds = Seq(Person("Andy", 32)).toDS()
 
 // DataFrames can be converted to a Dataset by providing a class. Mapping will be done by name.
-val path = "examples/src/main/resources/people.json"
+val path = "file:///usr/lib/spark/python/test_support/sql/people.json"
 val people = sqlContext.read.json(path).as[Person]
 
 --Inferring the Schema Using Reflection
 
 import sqlContext.implicits._
+
+-- open another terminal and create a file people.txt with the below content
+
+vi people.txt
+
+Michael, 29
+Andy, 30
+Justin, 19
+
 
 // Define the schema using a case class.
 // Note: Case classes in Scala 2.10 can support only up to 22 fields. To work around this limit,
@@ -66,7 +90,7 @@ import sqlContext.implicits._
 case class Person(name: String, age: Int)
 
 // Create an RDD of Person objects and register it as a table.
-val people = sc.textFile("examples/src/main/resources/people.txt").map(_.split(",")).map(p => Person(p(0), p(1).trim.toInt)).toDF()
+val people = sc.textFile("file:///home/cloudera/people.txt").map(_.split(",")).map(p => Person(p(0), p(1).trim.toInt)).toDF()
 people.registerTempTable("people")
 
 // SQL statements can be run by using the sql methods provided by sqlContext.
@@ -86,7 +110,7 @@ teenagers.map(_.getValuesMap[Any](List("name", "age"))).collect().foreach(printl
 -- Programmatically Specifying the Schema
 
 // Create an RDD
-val people = sc.textFile("examples/src/main/resources/people.txt")
+val people = sc.textFile("file:///home/cloudera/people.txt")
 
 // The schema is encoded in a string
 val schemaString = "name age"
@@ -121,8 +145,19 @@ results.map(t => "Name: " + t(0)).collect().foreach(println)
 -- create hive table via spark sql
 
 sqlContext.sql("CREATE TABLE IF NOT EXISTS src (key INT, value STRING)")
-sqlContext.sql("LOAD DATA LOCAL INPATH 'examples/src/main/resources/kv1.txt' INTO TABLE src")
+sqlContext.sql("LOAD DATA LOCAL INPATH '/usr/share/doc/hive-1.1.0+cdh5.14.0+1330/examples/files/kv1.txt' INTO TABLE src")
 
 // Queries are expressed in HiveQL
 sqlContext.sql("FROM src SELECT key, value").collect().foreach(println)
 
+-- access the hive table as dataframe.
+
+val df = sqlContext.table("default.src")
+
+-- append data to the hive table via df
+
+df.write.mode("append").insertInto("default.src")
+
+-- overwrite data to the hive table
+
+df.write.mode("overwrite").insertInto("default.src")
