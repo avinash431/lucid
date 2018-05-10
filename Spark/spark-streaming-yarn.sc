@@ -62,11 +62,18 @@ import org.apache.spark.streaming._
 
  val stc = new StreamingContext(sc, Seconds(3))
 
+stc.checkpoint("hdfs://quickstart.cloudera.com/user/training/spark/checkpoint")
+
 val lines = stc.socketTextStream("localhost", 9999)
 
-val words = lines.countByWindow(Seconds(15),Seconds(3))
+val words = lines.flatMap(_.split(" "))
 
-words.print
+val pairs = words.map(word => (word, 1))
+
+val wordCounts = pairs.reduceByKeyAndWindow(((x:Int, y:Int) => x + y), 
+                                             Seconds(15), Seconds(3))
+
+wordCounts.print
 
 stc.start()
 
