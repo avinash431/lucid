@@ -22,5 +22,58 @@ nc -lk 9999
 
 -- enter the text and the in spark terminal you'll see the word count 
 
+--stateful transformation
+
+import org.apache.spark._
+import org.apache.spark.streaming._
+import org.apache.spark.streaming.StreamingContext._ 
+
+  val updateFunc = (values: Seq[Int], state: Option[Int]) => {
+      val currentCount = values.foldLeft(0)(_ + _)
  
+      val previousCount = state.getOrElse(0)
+ 
+      Some(currentCount + previousCount)
+    }
+
+val ssc = new StreamingContext(sc, Seconds(1))
+
+-- checkpoint the Dstream RDD
+ssc.checkpoint("hdfs://quickstart.cloudera.com/user/training/spark/checkpoint")
+
+val lines = ssc.socketTextStream("localhost", 9999)
+
+val words = lines.flatMap(_.split(" ")).reduceByKey(_+_).updateStateByKey(updateFunc)
+
+wordCounts.print()
+
+ssc.start()    
+
+-- open another terminal and run the below command
+
+nc -lk 9999
+
+-- enter the text and the in spark terminal you'll see the word count 
+
+
+ -- sliding window function
+
+import org.apache.spark.streaming._
+
+ val stc = new StreamingContext(sc, Seconds(3))
+
+val lines = stc.socketTextStream("localhost", 9999)
+
+val words = lines.countByWindow(Seconds(15),Seconds(3))
+
+words.print
+
+stc.start()
+
+-- open another terminal and run the below command
+
+nc -lk 9999
+
+-- enter the text and the in spark terminal you'll see the word count 
+
 
