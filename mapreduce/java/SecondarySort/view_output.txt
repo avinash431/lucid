@@ -1,0 +1,1 @@
+hdfs dfs -cat <output-path> | cut -d ',' -f6,7 | more
