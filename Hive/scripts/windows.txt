@@ -10,7 +10,7 @@ INSERT INTO t_employee VALUES
 ( 6,  'Michael', 'Production',  3600, 28),
 ( 7,  'Tom',     'Production',  3800, 35),
 ( 8,  'Kevin',   'Production',  4000, 52),
-( 9,  'Elvis',   'Service',     4100, 40),
+( 9,  'Elvis',   'Sales',     4100, 40),
 (10,  'Sophia',  'Sales',       4300, 36),
 (11,  'Samantha','Sales',       4100, 38);
 
