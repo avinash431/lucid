@@ -25,7 +25,7 @@ a1.sinks.k1.channel = c1
 :wq
 
 --start the flume
-bin/flume-ng agent --conf conf --conf-file example.conf --name a1 -Dflume.root.logger=INFO,console
+flume-ng agent --conf conf --conf-file example.conf --name a1 -Dflume.root.logger=INFO,console
 
 -- install telnet 
 
