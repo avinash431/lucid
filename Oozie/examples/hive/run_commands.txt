@@ -15,7 +15,7 @@ hdfs dfs -put /etc/hive/conf.dist/hive-site.xml /user/cloudera/oozieProject/work
 
 export OOZIE_URL="http://quickstart.cloudera:11000/oozie"
 
-oozie job -config job.properties -run -oozie http://localhost:8080/oozie
+oozie job -config job.properties -run 
 
 oozie job -info <oozie-job-id>
 
