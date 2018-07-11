@@ -68,3 +68,16 @@ hadoop config
 hadoop fsck -blocks /user/training/hdfs/data/names.txt
 
 
+to check a directory in hdfs
+hdfs dfs -test -d /user/training/hdfs/data/
+
+to check a file in hdfs 
+hdfs dfs -test -f /user/training/hdfs/data/names.txt
+
+
+hdfs script file :
+/usr/lib/hadoop-hdfs/bin/hdfs
+
+hadoop script file
+/usr/lib/hadoop-hdfs/bin/hdfs
+
