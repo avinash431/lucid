@@ -79,5 +79,5 @@ hdfs script file :
 /usr/lib/hadoop-hdfs/bin/hdfs
 
 hadoop script file
-/usr/lib/hadoop-hdfs/bin/hdfs
+/usr/lib/hadoop/bin/hadoop
 
