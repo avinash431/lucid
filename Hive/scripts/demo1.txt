@@ -18,6 +18,16 @@ address string
 show tables;
 describe customers;
 
+describe extended customers;
+
+describe formatted customers;
+
+show create table customers;
+
+show columns in customers;
+
+show tblproperties customers;
+
 insert into customers values (
 1111, "John", "WA"
 );
