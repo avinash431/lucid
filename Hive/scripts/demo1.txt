@@ -1,8 +1,13 @@
 Hive
 ————
 
+show databases;
+
 create database pluralsight;
 use pluralsight;
+
+create database if not exists lucid;
+show databases;
 
 create table customers (
 id bigint,
