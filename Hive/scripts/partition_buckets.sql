@@ -28,7 +28,7 @@ load data local inpath '/home/cloudera/hive-data/aus.csv' into table employees p
  
  set hive.exec.dynamic.partition.mode=nonstrict
  
- insert into table employee_partition select * from employee_stg;
+ insert into table employee_partition partition(country) select * from employee_stg;
  
  -- static partition with msck
  
