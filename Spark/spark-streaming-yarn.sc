@@ -45,7 +45,7 @@ val lines = ssc.socketTextStream("localhost", 9999)
 
 val words = lines.flatMap(_.split(" ")).map(word => (word, 1)).reduceByKey(_+_).updateStateByKey(updateFunc)
 
-wordCounts.print()
+words.print()
 
 ssc.start()    
 
