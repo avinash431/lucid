@@ -7,7 +7,7 @@ fields terminated by ',';
 
 --static partition
 
-insert into table employees partition(country='IND') (1, 'avinash', 'hyd');
+insert into table employees partition(country='IND') values (1, 'avinash', 'hyd');
 
 load data local inpath '/home/cloudera/hive-data/uk.csv' into table employees partition(country = 'uk');
 load data local inpath '/home/cloudera/hive-data/us.csv' into table employees partition(country = 'us');
