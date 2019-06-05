@@ -1,2 +1,0 @@
-use lucid;
-create table employess_dept(EID int,NAME string,AGE string,SALARY float,DEPT string) row format delimited fields terminated by ',';
