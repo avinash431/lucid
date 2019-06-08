@@ -4,11 +4,11 @@
 scripts_dir=$(cd `dirname $0` && pwd)
 
 hive_script_dir=$(cd ${scripts_dir} && cd ../hql && pwd)
-log_dir=$(cd ${scripts_dir} && cd ../logs && pwd)
-
+base_dir=$(cd ${scripts_dir} && cd .. && pwd)
+log_dir=${base_dir}/logs
 hive_script_file=$hive_script_dir/xml_insert_tables.sql
 
-file_input_loc="/user/lucid/inputfiles"
+file_input_loc="/home/cloudera/projects/xml/input"
 file_name="customer_books.xml"
 database_name="lucid"
 staging_table_name="xml_temp"
@@ -17,10 +17,15 @@ BEELINE_COMMAND="jdbc:hive2://"
 
 if [[ ! -d $log_dir ]]
 then
-    mkdir -p $logdir
+    mkdir $log_dir
+    touch ${log_dir}/bank_flat_file.log
 fi
 
 exec &>>${log_dir}/bank_flat_file.log
+
+
+echo "log dir is " $log_dir
+echo "hql dir is " $hive_script_dir
 
 #get the staging table and rep table location
 fetch_table_loc(){
