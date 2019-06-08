@@ -6,7 +6,7 @@ scripts_dir=$(cd `dirname $0` && pwd)
 hive_script_dir=$(cd ${scripts_dir} && cd ../hql && pwd)
 log_dir=$(cd ${scripts_dir} && cd ../logs && pwd)
 
-hive_script_file=$hive_script_dir/insert_tables.sql
+hive_script_file=$hive_script_dir/xml_insert_tables.sql
 
 file_input_loc="/user/lucid/inputfiles"
 file_name="customer_books.xml"
