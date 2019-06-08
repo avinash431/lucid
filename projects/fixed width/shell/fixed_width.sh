@@ -3,9 +3,9 @@
 scripts_dir=$(cd `dirname $0` && pwd)
 
 hive_script_dir=$(cd ${scripts_dir} && cd ../hql && pwd)
-log_dir=$(cd ${scripts_dir} && cd ../logs && pwd)
+base_dir=$(cd ${scripts_dir} && cd .. && pwd)
+log_dir=${base_dir}/logs
 
-hive_script_file=$hive_script_dir/insert_branch_details.sql
 fixed_width_jar_loc=""
 file_input_loc="/user/lucid/inputfiles"
 file_name="employees.txt"
