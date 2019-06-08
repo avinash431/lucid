@@ -15,6 +15,11 @@ staging_table_name="xml_temp"
 
 BEELINE_COMMAND="jdbc:hive2://"
 
+if [[ ! -d $log_dir ]]
+then
+    mkdir -p $logdir
+fi
+
 exec &>>${log_dir}/bank_flat_file.log
 
 #get the staging table and rep table location
